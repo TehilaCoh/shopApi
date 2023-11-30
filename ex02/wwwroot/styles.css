@@ -1,0 +1,24 @@
+﻿body {
+    background-color:antiquewhite;
+    text-align:center;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size:larger;
+}
+
+p{
+    font-size:larger;
+    color:deeppink;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+h1{
+    font-size: x-large;
+    color: deeppink;
+}
+a{
+    text-size-adjust:150%;
+    color:aqua;
+}
+login {
+    background-color:aqua;
+
+}
