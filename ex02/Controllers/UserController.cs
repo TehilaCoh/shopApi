@@ -15,36 +15,36 @@ namespace ex02.Controllers
     {
         private readonly IMapper _map;
 
-      private readonly IUserService  userServices;
+        private readonly IUserService  userServices;
 
-        public UserController(IUserService _userServices, IMapper map)
+        private readonly ILogger _logger;
+
+        public UserController(IUserService _userServices, IMapper map, ILogger<UserController> logger)
         {
             userServices = _userServices;
-            _map=map;
+            _map = map;
+          _logger = logger;
         }
         [Route("login")]
         // GET api/<RegisterAndLogin>/5
         [HttpPost]
-        public async Task< ActionResult<User>> Get([FromQuery] UserLoginDto loginDto)                           
+        public async Task< ActionResult<User>> Get([FromBody] UserLoginDto loginDto)                           
         {
-            //User user = await userServices.GetUserByUserNameAndPassword(userName, password);
             var userName = loginDto.Email;
             var password = loginDto.Password;
             User user = await userServices.GetUserByUserNameAndPassword(userName, password);
+           _logger.LogInformation("Login attempted with User Name , {userName} and password {password}", userName, password);
             if (user == null)
-                return NoContent();
+                return NotFound();
             return Ok(user);
         }
         // POST api/<RegisterAndLogin>
         [HttpPost]
         public async Task< CreatedAtActionResult> Post([FromBody] UserDto userDto)
-        {
-            
-                User user =_map.Map<UserDto,User> (userDto);
+        {           
+                User user = _map.Map<UserDto, User>(userDto);
                 await userServices.Post(user);
                 return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
-            
-
         }
 
         // PUT api/<RegisterAndLogin>/5

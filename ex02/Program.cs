@@ -1,6 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using Repositories;
 using Repository;
 using Services;
+using ex02.MiddleWare;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,11 +33,22 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
+builder.Services.AddTransient<IRatingRepository, RatingRepository>();
+
+
 builder.Services.AddDbContext<AdoNet1Context>();
 
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
+
+
+
+builder.Services.AddDbContext<AdoNet1Context>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("School")));
+
+builder.Host.UseNLog();
+
+
 
 var app = builder.Build();
 
@@ -44,11 +58,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware();
 
 app.UseStaticFiles();
 

@@ -1,16 +1,15 @@
 
 const login = async () => {
     try {
-
-        var userName = document.getElementById("userNameLogin").value
+        var email = document.getElementById("userNameLogin").value
         var password = document.getElementById("passwordLogin").value
-        var user2 = { userName, password }
+        var user = { email, password }
         const res = await fetch('api/User/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(user2)
+            body: JSON.stringify(user)
 
         });
 

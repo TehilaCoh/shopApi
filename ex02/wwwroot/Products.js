@@ -2,8 +2,7 @@ const cart = []
 var count = 0;
 var c = 0;
 async function FilterProducts() {
-   
-    console.log("filtered")
+
     const minPrice = document.getElementById("minPrice").value
     const maxPrice = document.getElementById("maxPrice").value
     const nameSearch = document.getElementById("nameSearch").value
@@ -26,9 +25,10 @@ async function FilterProducts() {
         }  
 }
 async function showProducts() {
-    document.getElementById("ItemsCountText").innerHTML = count
+  
     const res = await fetch(`api/Product`);
     const data = await res.json();
+    document.getElementById("counter").innerHTML = data.length;
     for (let i = 0; i < data.length; i++) {
         drawProduct(data[i])
     }
@@ -39,8 +39,9 @@ function drawProduct(product) {
         clonProduct.querySelector("h1").innerText = product.productName;
         clonProduct.querySelector(".price").innerText = product.price +"¤";
         clonProduct.querySelector("img").src = "images/" + product.image;
+        clonProduct.querySelector(".description").innerText = product.description;
         clonProduct.querySelector("button").addEventListener('click', () => { addToCart(product) });
-        document.getElementById("PoductList").appendChild(clonProduct);
+    document.getElementById("PoductList").appendChild(clonProduct);
 }
 async function getAllCategory() {   
     const res = await fetch("api/Category");
