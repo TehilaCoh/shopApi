@@ -5,17 +5,14 @@ using Repository;
 using Services;
 using ex02.MiddleWare;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 // Configure the HTTP request pipeline.
-
-
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
@@ -35,6 +32,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddTransient<IRatingRepository, RatingRepository>();
 
+builder.Services.AddTransient<IRatingService, RatingService>();
 
 builder.Services.AddDbContext<AdoNet1Context>();
 
@@ -43,10 +41,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Host.UseNLog();
 builder.Services.AddDbContext<AdoNet1Context>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("School")));
 
-builder.Host.UseNLog();
+
 
 
 
@@ -58,16 +57,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseMiddleware();
+app.UseMiddleware<RatingMiddleware>();
 
-app.UseStaticFiles();
+
 
 app.Run();
+
+

@@ -23,5 +23,11 @@ namespace Repository
 
             return order;
         }
+        public async Task<double> getPrice(OrderItem order)
+        {
+            Product product = _DbContext.Products.Where(item => item.ProductId == order.ProductId).FirstOrDefault();
+            return (double)product.Price;
+        }
+
     }
 }

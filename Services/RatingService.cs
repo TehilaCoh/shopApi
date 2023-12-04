@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-     public class RatingService
+     public class RatingService: IRatingService
     {
         private readonly IRatingRepository ratingRepository;
 

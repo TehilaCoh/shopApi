@@ -24,7 +24,7 @@ namespace ex02.Controllers
         public async Task<ActionResult<OrderDto>> post([FromBody]OrderDto orderdto)
         {
             Order orderM = _map.Map<OrderDto, Order>(orderdto);
-            Order order= await orderServices.Post(orderM);
+            Order order= await orderServices.CreateNewOrder(orderM);
             OrderDto orderDTO = _map.Map<Order, OrderDto>(order);
 
             return orderDTO;

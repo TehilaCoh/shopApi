@@ -33,6 +33,11 @@ namespace Repository
         {
             return await _DbContext.Products.Where(a => a.CategoryId == category).ToListAsync();
         }
+
+        //public async Task<Product> GetProductById(int ProductId) { 
+        
+            
+        //}
     }
 
 }

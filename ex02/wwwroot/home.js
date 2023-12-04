@@ -30,11 +30,18 @@ const login = async () => {
 
 }
 const register = async () => {
+    var email = document.getElementById("userNameRegister").value;
+   
+    var em = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    var email = document.getElementById("userNameRegister").value
-    var password = document.getElementById("passwordRegister").value
-    var firstName = document.getElementById("firstName").value
-    var lastName = document.getElementById("lastName").value
+
+    if (!em.test(email)) {
+        alert("your adress is not valid!!!!!!!!!")
+        return;
+    }
+    var password = document.getElementById("passwordRegister").value;
+    var firstName = document.getElementById("firstName").value;
+    var lastName = document.getElementById("lastName").value;
     var user = { email, password, firstName, lastName }
     try {
         const res = await fetch('api/User', {
@@ -46,7 +53,6 @@ const register = async () => {
 
         });
         alert("user created sucssesfuly. please login now");
-        //const dataPost = await res.json();
     }
     catch (er) {
         alert(er.message)
@@ -64,9 +70,9 @@ const update = async () =>
     const password = document.getElementById("password").value ? document.getElementById("password").value: user.password
     var updateUser = { firstName, lastName, userName, password }
     console.log(updateUser);
-    const userId = user.userId;
+    const userid = user.userId;
     try {
-        const res = await fetch("api/user/" + userId, {
+        const res = await fetch("api/user/" + userid, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

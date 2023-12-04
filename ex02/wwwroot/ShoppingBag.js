@@ -33,8 +33,20 @@ function deleteProduct(product) {
     document.getElementById("myItem").replaceChildren([])
     getProducts();
 }
-
+class OrderItem {
+    constructor(ProductId, Quantity) { 
+        this.ProductId = ProductId;
+        this.Quantity = Quantity;}
+}
 async function placeOrder() {
+
+    let orderItems = [];
+    for (let i = 0; i < carts_products.length; i++) {
+        let ProductId = carts_products[i].productId;
+        let Quantity = 1
+        orderItems[i] = new OrderItem(ProductId, Quantity)
+    }
+
     var order = {
         orderDate: new Date(),
         orderSum: sum_money,
@@ -62,37 +74,6 @@ async function placeOrder() {
     }
    
 }
-
-
-
-//async function placeOrder() {
-//    var order = {
-//        orderDate: new Date(),
-//        orderSum: count,
-//        userId: JSON.parse(sessionStorage.getItem("user")).userId,
-//        orderItems: products
-//    };
-
-//    try {
-//        const response = await fetch("api/order", {
-//            method: "POST",
-//            headers: {
-//                'Content-Type': 'application/json'
-//            },
-//            body: JSON.stringify(order)
-//        })
-//        if (!response.ok)
-//            alert("faild... try again")
-//        else
-//            alert("your order invite sucssesfully")
-//    }
-//    catch (err) {
-//        alert("err", err)
-
-//    }
-//    //let data = await res.json();
-
-//}
 
 
 

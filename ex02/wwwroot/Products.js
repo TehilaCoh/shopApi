@@ -1,14 +1,14 @@
-const cart = []
-var count = 0;
+var cart = []
+var count=0;
 var c = 0;
 async function FilterProducts() {
-
     const minPrice = document.getElementById("minPrice").value
     const maxPrice = document.getElementById("maxPrice").value
     const nameSearch = document.getElementById("nameSearch").value
     let url = `api/Product?desc=${nameSearch}&minPrice=${minPrice}&maxPrice=${maxPrice}`
     let checkedCategories = [];
     const allCategoriesOptions = document.querySelectorAll(".opt");
+
     for (let i = 0; i < allCategoriesOptions.length; i++) {       
         if (allCategoriesOptions[i].checked)           
             checkedCategories.push(allCategoriesOptions[i].id)
@@ -25,7 +25,11 @@ async function FilterProducts() {
         }  
 }
 async function showProducts() {
-  
+    if (sessionStorage.getItem("product")) {
+        cart = JSON.parse(sessionStorage.getItem("product"))
+        count = JSON.parse(sessionStorage.getItem("product")).length
+    }
+    document.getElementById("ItemsCountText").innerHTML = count
     const res = await fetch(`api/Product`);
     const data = await res.json();
     document.getElementById("counter").innerHTML = data.length;
@@ -34,13 +38,14 @@ async function showProducts() {
     }
 }
 function drawProduct(product) {
-        var temp = document.getElementById("temp-card");
-        var clonProduct = temp.content.cloneNode(true);
-        clonProduct.querySelector("h1").innerText = product.productName;
-        clonProduct.querySelector(".price").innerText = product.price +"¤";
-        clonProduct.querySelector("img").src = "images/" + product.image;
-        clonProduct.querySelector(".description").innerText = product.description;
-        clonProduct.querySelector("button").addEventListener('click', () => { addToCart(product) });
+    var tmp = document.getElementById("temp-card");
+    var clonProduct = tmp.content.cloneNode(true);
+
+    clonProduct.querySelector("h1").innerText = product.productName;
+    clonProduct.querySelector(".price").innerText = product.price +"¤";
+    clonProduct.querySelector("img").src = "images/" + product.image;
+    clonProduct.querySelector(".description").innerText = product.description;
+    clonProduct.querySelector("button").addEventListener('click', () => { addToCart(product) });
     document.getElementById("PoductList").appendChild(clonProduct);
 }
 async function getAllCategory() {   
