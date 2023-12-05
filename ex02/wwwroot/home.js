@@ -14,7 +14,7 @@ const login = async () => {
         });
 
         if (!res.ok) {
-            throw new Error("error!!!")
+            throw new Error("the password or the userName is worng!!!")
         }
         else {
             var data = await res.json()
@@ -66,13 +66,14 @@ const update = async () =>
     console.log(user);
     const firstName = document.getElementById("firstName").value ? document.getElementById("firstName").value: user.firstName
     const lastName = document.getElementById("lastName").value ? document.getElementById("lastName").value: user.lastName
-    const userName = document.getElementById("userName").value ? document.getElementById("userName").value: user.userName
+    const email = document.getElementById("userName").value ? document.getElementById("userName").value: user.userName
     const password = document.getElementById("password").value ? document.getElementById("password").value: user.password
-    var updateUser = { firstName, lastName, userName, password }
+    var updateUser = { firstName, lastName, email, password }
     console.log(updateUser);
     const userid = user.userId;
     try {
-        const res = await fetch("api/user/" + userid, {
+        const url = 'api/User' + "/" + userid;
+        const res = await fetch(url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -80,7 +81,9 @@ const update = async () =>
             body: JSON.stringify(updateUser)
         });
         const response = await res.json();
-        aler("update succeed");
+        alert("update succeed");
+        window.location.href = "Products.html"
+           
     }
     catch (error) {
         alert("error",error)

@@ -34,7 +34,7 @@ builder.Services.AddTransient<IRatingRepository, RatingRepository>();
 
 builder.Services.AddTransient<IRatingService, RatingService>();
 
-builder.Services.AddDbContext<AdoNet1Context>();
+builder.Services.AddTransient<AdoNet1Context>();
 
 builder.Services.AddEndpointsApiExplorer();
 
